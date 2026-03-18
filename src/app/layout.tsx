@@ -55,6 +55,7 @@ export default async function RootLayout({
           location={settings?.location || undefined}
           email={settings?.email || undefined}
           instagram={settings?.instagram || undefined}
+          allowDownload={settings?.allowDownload || false}
         />
       </body>
     </html>
