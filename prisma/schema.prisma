@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Category {
+  id                 String   @id @default(cuid())
+  name               String
+  slug               String   @unique
+  description        String?
+  coverImageUrl      String?
+  coverImagePublicId String?
+  order              Int      @default(0)
+  isVisible          Boolean  @default(true)
+  metaTitle          String?
+  metaDescription    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  photos             Photo[]
+  events             Event[]
+}
+
+model Event {
+  id                 String   @id @default(cuid())
+  name               String
+  slug               String   @unique
+  description        String?
+  date               DateTime?
+  coverImageUrl      String?
+  coverImagePublicId String?
+  order              Int      @default(0)
+  isVisible          Boolean  @default(true)
+  categoryId         String
+  category           Category @relation(fields: [categoryId], references: [id])
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  photos             Photo[]
+}
+
+model Photo {
+  id                String   @id @default(cuid())
+  title             String
+  slug              String   @unique
+  description       String?
+  altText           String
+  imageUrl          String
+  imagePublicId     String
+  width             Int
+  height            Int
+  location          String?
+  takenAt           DateTime?
+  camera            String?
+  focalLength       String?
+  aperture          String?
+  shutterSpeed      String?
+  iso               Int?
+  categoryId        String
+  category          Category @relation(fields: [categoryId], references: [id])
+  eventId           String?
+  event             Event?   @relation(fields: [eventId], references: [id])
+  order             Int      @default(0)
+  isFeatured        Boolean  @default(false)
+  isVisible         Boolean  @default(true)
+  metaTitle         String?
+  metaDescription   String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model SiteSettings {
+  id                String   @id @default("singleton")
+  photographerName  String   @default("Photographe")
+  tagline           String?
+  bio               String?
+  location          String?
+  email             String?
+  phone             String?
+  instagram         String?
+  behance           String?
+  linkedin          String?
+  metaTitle         String?
+  metaDescription   String?
+  ogImageUrl        String?
+  theme             String   @default("light")
+  accentColor       String   @default("#1a1a1a")
+  showExifData      Boolean  @default(true)
+  allowDownload     Boolean  @default(false)
+  aboutApproach     String?
+  cameras           String[] @default([])
+}
+
+model DownloadLead {
+  id         String   @id @default(cuid())
+  firstName  String
+  lastName   String
+  email      String
+  photoId    String?
+  photoTitle String?
+  createdAt  DateTime @default(now())
+}
