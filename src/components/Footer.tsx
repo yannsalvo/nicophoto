@@ -5,9 +5,10 @@ interface FooterProps {
   location?: string
   email?: string
   instagram?: string
+  allowDownload?: boolean
 }
 
-export function Footer({ photographerName, location, email, instagram }: FooterProps) {
+export function Footer({ photographerName, location, email, instagram, allowDownload }: FooterProps) {
   const year = new Date().getFullYear()
 
   return (
@@ -22,7 +23,23 @@ export function Footer({ photographerName, location, email, instagram }: FooterP
           )}
           <span className="text-xs text-muted-foreground/60 mt-1">&copy; {year}</span>
         </div>
-        <nav className="flex items-center gap-5" aria-label="Liens sociaux">
+        <nav className="flex items-center gap-5" aria-label="Liens">
+          {allowDownload && (
+            <Link
+              href="/telecharger"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              data-cursor="hover"
+            >
+              <span className="flex items-center gap-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Télécharger
+              </span>
+            </Link>
+          )}
           {email && (
             <a
               href={`mailto:${email}`}
