@@ -20,7 +20,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export async function generateStaticParams() {
   const photos = await prisma.photo.findMany({
     where: { isVisible: true, category: { isVisible: true } },
-    include: { category: { select: { slug: true } } },
     select: { slug: true, category: { select: { slug: true } } },
   })
   return photos.map((p) => ({
