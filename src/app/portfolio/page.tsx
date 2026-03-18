@@ -19,7 +19,7 @@ export default async function PortfolioPage() {
   return (
     <section className="pt-[80px] px-6 md:px-10 max-w-6xl mx-auto">
       <h1 className="text-3xl font-light tracking-wide mb-12 text-center">Portfolio</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {categories.map((cat) => (
           <Link
             key={cat.id}
@@ -33,7 +33,7 @@ export default async function PortfolioPage() {
                 alt={cat.name}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
               />
             ) : (
               <div className="absolute inset-0 bg-muted-foreground/10" />

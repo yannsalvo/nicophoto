@@ -53,7 +53,7 @@ export function CategoryGalleryClient({
       )}
 
       {/* Photo grid - landscape photos span 2 columns */}
-      <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
+      <div className="columns-1 sm:columns-2 md:columns-3 gap-3 space-y-3">
         {photos.map((photo) => {
           const isLandscape = photo.width > photo.height
 
@@ -71,7 +71,7 @@ export function CategoryGalleryClient({
                 width={photo.width}
                 height={photo.height}
                 className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                sizes={isLandscape ? '100vw' : '(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw'}
+                sizes={isLandscape ? '100vw' : '(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw'}
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end">
                 <div className="p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
