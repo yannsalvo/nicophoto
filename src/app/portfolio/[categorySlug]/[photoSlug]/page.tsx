@@ -18,14 +18,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const photos = await prisma.photo.findMany({
-    where: { isVisible: true, category: { isVisible: true } },
-    select: { slug: true, category: { select: { slug: true } } },
-  })
-  return photos.map((p) => ({
-    categorySlug: p.category.slug,
-    photoSlug: p.slug,
-  }))
+  try {
+    const photos = await prisma.photo.findMany({
+      where: { isVisible: true, category: { isVisible: true } },
+      select: { slug: true, category: { select: { slug: true } } },
+    })
+    return photos.map((p) => ({
+      categorySlug: p.category.slug,
+      photoSlug: p.slug,
+    }))
+  } catch {
+    return []
+  }
 }
 
 export default async function PhotoPage({ params }: Props) {
