@@ -13,10 +13,17 @@ const plusJakarta = Plus_Jakarta_Sans({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await prisma.siteSettings.findFirst()
-  return {
-    title: settings?.metaTitle || 'Nicolas Debray — Photographe',
-    description: settings?.metaDescription || 'Portfolio de Nicolas Debray',
+  try {
+    const settings = await prisma.siteSettings.findFirst()
+    return {
+      title: settings?.metaTitle || 'Nicolas Debray — Photographe',
+      description: settings?.metaDescription || 'Portfolio de Nicolas Debray',
+    }
+  } catch {
+    return {
+      title: 'Nicolas Debray — Photographe',
+      description: 'Portfolio de Nicolas Debray',
+    }
   }
 }
 
@@ -25,7 +32,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const settings = await prisma.siteSettings.findFirst()
+  let settings = null
+  try {
+    settings = await prisma.siteSettings.findFirst()
+  } catch {
+    // DB unavailable during build
+  }
 
   return (
     <html lang="fr">
