@@ -47,6 +47,7 @@ export default async function CategoryPage({ params }: Props) {
       event: { select: { name: true } },
     },
     orderBy: [
+      { isFeatured: 'desc' },
       { takenAt: 'desc' },
       { createdAt: 'desc' },
     ],

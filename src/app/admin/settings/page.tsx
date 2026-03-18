@@ -64,10 +64,6 @@ export default function AdminSettingsPage() {
             <input type="checkbox" checked={form.showExifData as boolean} onChange={(e) => setForm({ ...form, showExifData: e.target.checked })} />
             Afficher les données EXIF
           </label>
-          <label className="flex items-center gap-2 text-sm">
-            <input type="checkbox" checked={form.allowDownload as boolean} onChange={(e) => setForm({ ...form, allowDownload: e.target.checked })} />
-            Autoriser le téléchargement
-          </label>
         </div>
         <button type="submit" disabled={saving} className="bg-foreground text-background px-6 py-2 text-sm disabled:opacity-50">
           {saving ? 'Enregistrement...' : 'Enregistrer'}
