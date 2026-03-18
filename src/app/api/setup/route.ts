@@ -9,3 +9,5 @@ export async function GET() {
     return NextResponse.json({ configured: false })
   }
 }
+
+export const dynamic = 'force-dynamic'

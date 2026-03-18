@@ -22,3 +22,5 @@ export default async function AboutPage() {
     </section>
   )
 }
+
+export const dynamic = 'force-dynamic'

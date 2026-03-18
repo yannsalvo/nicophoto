@@ -121,3 +121,5 @@ export default async function PhotoPage({ params }: Props) {
     </section>
   )
 }
+
+export const dynamic = 'force-dynamic'

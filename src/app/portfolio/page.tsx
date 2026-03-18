@@ -51,3 +51,5 @@ export default async function PortfolioPage() {
     </section>
   )
 }
+
+export const dynamic = 'force-dynamic'
