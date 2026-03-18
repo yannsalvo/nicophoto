@@ -34,7 +34,7 @@ export default async function CategoryPage({ params }: Props) {
     include: {
       events: {
         where: { isVisible: true },
-        orderBy: { order: 'asc' },
+        orderBy: { date: 'desc' },
       },
     },
   })

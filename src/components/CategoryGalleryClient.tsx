@@ -73,11 +73,6 @@ export function CategoryGalleryClient({
                 className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 sizes={isLandscape ? '100vw' : '(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw'}
               />
-              {photo.isFeatured && (
-                <div className="absolute top-3 left-3 bg-white/90 text-black text-[10px] tracking-widest uppercase px-3 py-1 rounded-full font-medium">
-                  A la une
-                </div>
-              )}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end">
                 <div className="p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                   {photo.event && (

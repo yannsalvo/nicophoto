@@ -26,12 +26,8 @@ interface HomeMasonryProps {
 }
 
 export function HomeMasonry({ photos, categories }: HomeMasonryProps) {
-  // Featured photos first, then the rest
-  const sortedPhotos = [...photos].sort((a, b) => {
-    if (a.isFeatured && !b.isFeatured) return -1
-    if (!a.isFeatured && b.isFeatured) return 1
-    return 0
-  })
+  const featuredPhotos = photos.filter((p) => p.isFeatured)
+  const regularPhotos = photos.filter((p) => !p.isFeatured)
 
   return (
     <section className="pt-[80px] px-4 md:px-8 max-w-[1800px] mx-auto">
@@ -49,20 +45,58 @@ export function HomeMasonry({ photos, categories }: HomeMasonryProps) {
         ))}
       </div>
 
-      {/* Masonry grid - landscape photos span 2 columns */}
-      <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
-        {sortedPhotos.map((photo) => {
+      {/* Featured photos - hero section, full width landscape */}
+      {featuredPhotos.length > 0 && (
+        <div className="mb-8 space-y-4">
+          {featuredPhotos.map((photo) => (
+            <Link
+              key={photo.id}
+              href={`/portfolio/${photo.category.slug}/${photo.slug}`}
+              className="block relative group overflow-hidden"
+              data-cursor="hover"
+            >
+              <div className="relative w-full overflow-hidden" style={{ maxHeight: '70vh' }}>
+                <Image
+                  src={photo.imageUrl}
+                  alt={photo.title}
+                  width={photo.width}
+                  height={photo.height}
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                  sizes="100vw"
+                  priority
+                />
+              </div>
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end">
+                <div className="p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-white text-sm tracking-wide font-light">
+                    {photo.title}
+                  </span>
+                  {photo.event && (
+                    <span className="text-white/80 text-xs tracking-wide ml-3">
+                      {photo.event.name}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {/* Regular photos - 3 column grid, landscape photos span 2 columns */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-auto">
+        {regularPhotos.map((photo) => {
           const isLandscape = photo.width > photo.height
 
           return (
             <Link
               key={photo.id}
               href={`/portfolio/${photo.category.slug}/${photo.slug}`}
-              className={`block relative group overflow-hidden break-inside-avoid ${
-                isLandscape ? 'md:col-span-2 md:break-inside-auto' : ''
+              className={`block relative group overflow-hidden ${
+                isLandscape ? 'col-span-2' : 'col-span-1'
               }`}
               data-cursor="hover"
-              style={isLandscape ? { columnSpan: 'all' } : undefined}
             >
               <Image
                 src={photo.imageUrl}
@@ -70,14 +104,8 @@ export function HomeMasonry({ photos, categories }: HomeMasonryProps) {
                 width={photo.width}
                 height={photo.height}
                 className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                sizes={isLandscape ? '100vw' : '(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw'}
+                sizes={isLandscape ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
               />
-              {/* Featured badge */}
-              {photo.isFeatured && (
-                <div className="absolute top-3 left-3 bg-white/90 text-black text-[10px] tracking-widest uppercase px-3 py-1 rounded-full font-medium">
-                  A la une
-                </div>
-              )}
               {/* Hover overlay with event name */}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end">
                 <div className="p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">

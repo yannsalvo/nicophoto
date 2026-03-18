@@ -12,7 +12,7 @@ async function getHomeData() {
       },
       orderBy: [
         { isFeatured: 'desc' },
-        { order: 'asc' },
+        { takenAt: 'desc' },
         { createdAt: 'desc' },
       ],
     }),
