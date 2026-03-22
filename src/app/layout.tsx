@@ -16,13 +16,31 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await prisma.siteSettings.findFirst()
     return {
-      title: settings?.metaTitle || 'Nicolas Debray — Photographe',
-      description: settings?.metaDescription || 'Portfolio de Nicolas Debray',
+      title: {
+        default: settings?.metaTitle || 'Photographe à Paris | Nicolas Debray — Lumière & Minimalisme',
+        template: '%s | Nicolas Debray',
+      },
+      description: settings?.metaDescription || 'Photographe indépendant basé à Paris, spécialisé dans la lumière naturelle et les compositions minimalistes. Découvrez le portfolio de Nicolas Debray et téléchargez ses photos.',
+      openGraph: {
+        title: settings?.metaTitle || 'Photographe à Paris | Nicolas Debray — Lumière & Minimalisme',
+        description: settings?.metaDescription || 'Photographe indépendant basé à Paris, spécialisé dans la lumière naturelle et les compositions minimalistes. Découvrez le portfolio de Nicolas Debray et téléchargez ses photos.',
+        locale: 'fr_FR',
+        type: 'website',
+      },
     }
   } catch {
     return {
-      title: 'Nicolas Debray — Photographe',
-      description: 'Portfolio de Nicolas Debray',
+      title: {
+        default: 'Photographe à Paris | Nicolas Debray — Lumière & Minimalisme',
+        template: '%s | Nicolas Debray',
+      },
+      description: 'Photographe indépendant basé à Paris, spécialisé dans la lumière naturelle et les compositions minimalistes. Découvrez le portfolio de Nicolas Debray et téléchargez ses photos.',
+      openGraph: {
+        title: 'Photographe à Paris | Nicolas Debray — Lumière & Minimalisme',
+        description: 'Photographe indépendant basé à Paris, spécialisé dans la lumière naturelle et les compositions minimalistes. Découvrez le portfolio de Nicolas Debray et téléchargez ses photos.',
+        locale: 'fr_FR',
+        type: 'website',
+      },
     }
   }
 }

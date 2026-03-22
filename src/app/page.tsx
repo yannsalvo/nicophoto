@@ -1,6 +1,16 @@
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import { HomeMasonry } from '@/components/HomeMasonry'
+
+export const metadata: Metadata = {
+  title: 'Photographe à Paris | Nicolas Debray — Lumière & Minimalisme',
+  description: 'Photographe indépendant basé à Paris, spécialisé dans la lumière naturelle et les compositions minimalistes. Découvrez le portfolio de Nicolas Debray et téléchargez ses photos.',
+  openGraph: {
+    title: 'Photographe à Paris | Nicolas Debray — Lumière & Minimalisme',
+    description: 'Photographe indépendant basé à Paris, spécialisé dans la lumière naturelle et les compositions minimalistes. Découvrez le portfolio de Nicolas Debray et téléchargez ses photos.',
+  },
+}
 
 async function getHomeData() {
   const [photos, categories] = await Promise.all([
@@ -35,10 +45,16 @@ export default async function HomePage() {
     '@context': 'https://schema.org',
     '@type': 'ImageGallery',
     name: settings?.photographerName || 'Nicolas Debray',
-    description: settings?.metaDescription || '',
+    description: settings?.metaDescription || 'Photographe indépendant basé à Paris, spécialisé dans la lumière naturelle et les compositions minimalistes.',
     author: {
       '@type': 'Person',
       name: settings?.photographerName || 'Nicolas Debray',
+      jobTitle: 'Photographe',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Paris',
+        addressCountry: 'FR',
+      },
     },
   }
 
@@ -48,6 +64,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <h1 className="sr-only">Photographe à Paris — Nicolas Debray</h1>
       <Suspense fallback={<div className="pt-[80px] flex justify-center"><div className="animate-pulse">Chargement...</div></div>}>
         <HomeMasonry
           photos={photos.map((p) => ({

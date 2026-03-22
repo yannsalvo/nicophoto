@@ -13,7 +13,7 @@ export default function ContactPage() {
 
   return (
     <section className="pt-[80px] px-6 md:px-10 max-w-xl mx-auto">
-      <h1 className="text-3xl font-light tracking-wide mb-8">Contact</h1>
+      <h1 className="text-3xl font-light tracking-wide mb-8">Contacter Nicolas Debray — Photographe à Paris</h1>
       {sent ? (
         <p className="text-muted-foreground">Merci pour votre message !</p>
       ) : (
