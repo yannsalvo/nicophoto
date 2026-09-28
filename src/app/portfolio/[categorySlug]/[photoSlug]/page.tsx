@@ -5,10 +5,11 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 interface Props {
-  params: { categorySlug: string; photoSlug: string }
+  params: Promise<{ categorySlug: string; photoSlug: string }>
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
   const photo = await prisma.photo.findUnique({ where: { slug: params.photoSlug } })
   if (!photo) return {}
   return {
@@ -32,7 +33,8 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function PhotoPage({ params }: Props) {
+export default async function PhotoPage(props: Props) {
+  const params = await props.params
   const photo = await prisma.photo.findUnique({
     where: { slug: params.photoSlug },
     include: {

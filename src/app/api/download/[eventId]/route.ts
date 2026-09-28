@@ -1,10 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { eventId: string } }
-) {
+export async function GET(_request: Request, props: { params: Promise<{ eventId: string }> }) {
+  const params = await props.params
   // Check if download is allowed
   const settings = await prisma.siteSettings.findFirst()
   if (!settings?.allowDownload) {

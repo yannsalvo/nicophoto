@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nicophoto",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      // Self-reference, must match "name" above
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "nicophoto"
+    }
+  ],
+  "images": {
+    // next/image optimization through Cloudflare Images
+    "binding": "IMAGES"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // Optional: pool Neon connections through Hyperdrive. Create it with
+  //   npx wrangler hyperdrive create nicophoto-neon --connection-string="$DATABASE_URL_UNPOOLED"
+  // then uncomment and paste the id. Without it the Worker uses the DATABASE_URL secret.
+  // "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "<HYPERDRIVE_ID>" }]
+}
