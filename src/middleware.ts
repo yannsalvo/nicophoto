@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (pathname.startsWith('/api/admin')) {
+  if (pathname.startsWith('/api/admin') && pathname !== '/api/admin/login') {
     const token = request.cookies.get('admin-token')?.value
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
