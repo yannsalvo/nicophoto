@@ -5,3 +5,6 @@ CLOUDINARY_API_KEY=""
 CLOUDINARY_API_SECRET=""
 ADMIN_PASSWORD=""
 JWT_SECRET=""
+
+# Hyperdrive binding used by `npm run preview` (export it in your shell, not read from this file)
+# CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgresql://..."
