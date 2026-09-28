@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   const photo = await prisma.photo.findUnique({
     where: { id: params.id },
     include: {
@@ -13,7 +14,8 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
   return NextResponse.json(photo)
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   try {
     const data = await request.json()
     const photo = await prisma.photo.update({
@@ -26,7 +28,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   try {
     await prisma.photo.delete({ where: { id: params.id } })
     return NextResponse.json({ success: true })

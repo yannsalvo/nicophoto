@@ -20,7 +20,7 @@ export async function verifyToken(token: string) {
 }
 
 export async function isAuthenticated() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const token = cookieStore.get('admin-token')?.value
   if (!token) return false
   const payload = await verifyToken(token)

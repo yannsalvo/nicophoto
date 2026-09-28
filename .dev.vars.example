@@ -1,0 +1,10 @@
+# Local secrets for `npm run preview` (Cloudflare Workers runtime). Copy to .dev.vars.
+DATABASE_URL="postgresql://USER:PASSWORD@ep-xxx-pooler.REGION.aws.neon.tech/neondb?sslmode=require"
+CLOUDINARY_CLOUD_NAME="dyz8kdt5c"
+CLOUDINARY_API_KEY=""
+CLOUDINARY_API_SECRET=""
+ADMIN_PASSWORD=""
+JWT_SECRET=""
+
+# Hyperdrive binding used by `npm run preview` (export it in your shell, not read from this file)
+# CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgresql://..."

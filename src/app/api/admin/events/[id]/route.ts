@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   const event = await prisma.event.findUnique({ where: { id: params.id }, include: { category: true } })
   if (!event) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   return NextResponse.json(event)
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   try {
     const data = await request.json()
     const event = await prisma.event.update({ where: { id: params.id }, data })
@@ -17,7 +19,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   try {
     await prisma.event.delete({ where: { id: params.id } })
     return NextResponse.json({ success: true })
