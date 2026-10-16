@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nicophoto",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      // Self-reference, must match "name" above
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "nicophoto"
+    }
+  ],
+  "images": {
+    // next/image optimization through Cloudflare Images
+    "binding": "IMAGES"
+  },
+  "observability": {
+    "enabled": true
+  },
+  // Pools Neon connections (created with `wrangler hyperdrive create nicophoto-neon`).
+  // For `npm run preview`, set CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE
+  // to a Postgres URL (see .dev.vars.example).
+  "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "bd664983177d4155a4e549a8f6dceec3" }]
+}

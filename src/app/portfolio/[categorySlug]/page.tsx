@@ -4,10 +4,11 @@ import { CategoryGalleryClient } from '@/components/CategoryGalleryClient'
 import type { Metadata } from 'next'
 
 interface Props {
-  params: { categorySlug: string }
+  params: Promise<{ categorySlug: string }>
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
   const category = await prisma.category.findUnique({ where: { slug: params.categorySlug } })
   if (!category) return {}
   return {
@@ -28,7 +29,8 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage(props: Props) {
+  const params = await props.params
   const category = await prisma.category.findUnique({
     where: { slug: params.categorySlug },
     include: {
