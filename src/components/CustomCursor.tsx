@@ -57,8 +57,8 @@ export function CustomCursor() {
       ref={cursorRef}
       className="fixed pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-transform duration-150 ease-out hidden md:block"
       style={{
-        width: isHovering ? 48 : 12,
-        height: isHovering ? 48 : 12,
+        width: isHovering ? 28 : 12,
+        height: isHovering ? 28 : 12,
         borderRadius: '50%',
         border: `1.5px solid hsl(var(--foreground))`,
         opacity: isVisible ? 1 : 0,
